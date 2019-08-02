@@ -1,0 +1,205 @@
+#include<stdio.h>
+#include<string.h>
+#include<conio.h>
+int student_number;
+struct student
+{
+    char Name[100];
+    int ID,active;
+    double Structured_programming,Java,Electrical;  // Each of them is a 3 credit course
+} students[3000];
+
+void create_student_report_card()
+{
+    char name[100],x;
+    int id,i;
+    double structured_programming,java,electrical;
+
+    printf("Enter student's name: ");
+    scanf("%c",&x);
+    for(i=0; ; i++)
+    {
+        scanf("%c",&name[i]);
+        if(name[i]=='\n') break;
+    }
+    printf("Enter student's ID: ");
+    scanf("%d",&id);
+    printf("Enter student's mark in Structured programming: ");
+    scanf("%lf",&structured_programming);
+    printf("Enter student's mark in Java: ");
+    scanf("%lf",&java);
+    printf("Enter student's mark in Electrical: ");
+    scanf("%lf",&electrical);
+
+    student_number++;
+    strcpy(students[student_number].Name,name);
+    students[student_number].ID=id;
+    students[student_number].Structured_programming=structured_programming;
+    students[student_number].Java=java;
+    students[student_number].Electrical=electrical;
+    students[student_number].active=1;
+
+}
+void display_all()
+{
+    int i,j;
+
+    for(i=1; i<=student_number; i++)
+    {
+        if(students[i].active==1)
+        {
+            printf("\nStudent name: ");
+            for(j=0; students[i].Name[j]!='\n'; j++)
+                printf("%c",students[i].Name[j]);
+            printf("\n");
+            printf("\nStudent   ID: %d",students[i].ID);
+            printf("\nStudent's Marks:\n");
+            printf("\nStructured programming: %.2lf",students[i].Structured_programming);
+            printf("\nElectrical            : %.2lf",students[i].Electrical);
+            printf("\nJava                  : %.2lf",students[i].Java);
+            printf("\nAverage mark          : %.2lf\n",(students[i].Structured_programming*3+students[i].Electrical*3+students[i].Java*3)/9.0);
+        }
+    }
+}
+void display_specific()
+{
+    int id;
+    printf("Enter student ID : ");
+    scanf("%d",&id);
+    int i,j;
+
+    for(i=1; i<=student_number; i++)
+    {
+        if(students[i].ID==id && students[i].active==1)
+        {
+            printf("\nStudent name: ");
+            for(j=0; students[i].Name[j]!='\n'; j++)
+                printf("%c",students[i].Name[j]);
+            printf("\n");
+            printf("\nStudent   ID: %d",students[i].ID);
+            printf("\nStudent's Marks:\n");
+            printf("\nStructured programming: %.2lf",students[i].Structured_programming);
+            printf("\nElectrical            : %.2lf",students[i].Electrical);
+            printf("\nJava                  : %.2lf",students[i].Java);
+            printf("\nAverage Mark          : %.2lf\n",(students[i].Structured_programming*3+students[i].Electrical*3+students[i].Java*3)/9.0);
+            return;
+        }
+    }
+
+    printf("Student not found\n");
+}
+
+void grade_reports()
+{
+    int i,j;
+
+    for(i=1; i<=student_number; i++)
+    {
+        if(students[i].active==1)
+        {
+            printf("\nStudent name: ");
+            for(j=0; students[i].Name[j]!='\n'; j++)
+                printf("%c",students[i].Name[j]);
+            printf("\t");
+            printf("\nStudent   ID       : %d",students[i].ID);
+            printf("\t\tAverage Mark     : %.2lf\n",(students[i].Structured_programming*3+students[i].Electrical*3+students[i].Java*3)/9.0);
+        }
+    }
+}
+void modify_report()
+{
+    int id;
+    printf("Enter the ID of the student whose info you want to modify");
+    scanf("%d",&id);
+    int i,j,k,a;
+
+    for(i=1; i<=student_number; i++)
+    {
+        if(students[i].ID==id )
+        {
+            printf("To modify Structured programming marks press 1 ,To modify Java marks press 2 ,To modify Electrical marks press 3 , to exit modifying press 0 ");
+            scanf("%d",&k);
+            while(1)
+            {
+                scanf("%d",&k);
+                if(k==1)
+                    scanf("%d",&a), students[i].Structured_programming=a;
+                else if(k==2)
+                    scanf("%d",&a), students[i].Java=a;
+                else if(k==3)
+                    scanf("%d",&a), students[i].Electrical=a;
+                else if(k==0) break;
+                else
+                    printf("Invalid input try again\n");
+            }
+
+            return;
+        }
+    }
+
+}
+void delete_report()
+{
+    int id;
+    printf("Enter student ID to delete : ");
+    scanf("%d",&id);
+    int i,j;
+
+    for(i=1; i<=student_number; i++)
+    {
+        if(students[i].ID==id && students[i].active==1)
+        {
+            students[i].active=0;
+            return;
+        }
+    }
+
+    printf("Student not found\n");
+}
+ //system("color 5f");
+int main()
+{
+    system("color 2f");
+    int command;
+    printf("\t\t\t1.To create student report card record\n\t\t\t2.To display all student report card record\n\t\t\t3.To display specific student report card record\n\t\t\t4.To display all student grade report card record\n\t\t\t5.To modify student's report card record \n\t\t\t6.To delete student report card\n\t\t\t0.To exit");
+    printf("\n");
+    printf("Enter Your Chose :");
+    while(1)
+    {
+        scanf("%d",&command);
+        if(command==1)
+        {
+            create_student_report_card();
+        }
+        else if(command==2)
+        {
+            display_all();
+        }
+        else if(command==3)
+        {
+            display_specific();
+        }
+        else if(command==4)
+        {
+            grade_reports();
+        }
+        else if(command==5)
+        {
+            modify_report();
+        }
+        else if(command==6)
+        {
+            delete_report();
+        }
+        else if(command==0)
+        {
+            break;
+        }
+        else
+        {
+            printf("Invalid Command Try again\n");
+        }
+
+    }
+    return 0;
+}
